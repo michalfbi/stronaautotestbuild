@@ -9,7 +9,7 @@ export const submitLead = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { createClient } = await import("@supabase/supabase-js");
     const url = process.env.SUPABASE_URL!;
-    const key = process.env.SUPABASE_PUBLISHABLE_KEY!;
+    const key = (process.env.SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY) as string;
     const isOpaque = key ? key.startsWith("sb_") : false;
     const supabase = createClient(url, key, {
       auth: { persistSession: false, autoRefreshToken: false, storage: undefined },
