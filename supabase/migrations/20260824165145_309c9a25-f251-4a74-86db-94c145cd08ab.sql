@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.count_leads(text) FROM anon, authenticated;
