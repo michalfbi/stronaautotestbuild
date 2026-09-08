@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock, Award } from "lucide-react";
-import logoAsset from "@/assets/autotest-logo.png.asset.json";
 
 const COLS = [
   {
@@ -22,13 +21,6 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2">
-              <img
-                src={logoAsset.url}
-                alt="Autotest — logo"
-                className="h-10 w-10 rounded-xl"
-                loading="lazy"
-              />
-
               <span className="font-display text-lg font-semibold">
                 Auto<span className="text-gradient-primary">test</span>
               </span>

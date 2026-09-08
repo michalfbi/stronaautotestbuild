@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, Phone } from "lucide-react";
-import logoAsset from "@/assets/autotest-logo.png.asset.json";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -38,11 +37,6 @@ export function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2 group shrink-0">
-<img
-            src={logoAsset.url}
-            alt="Autotest — logo"
-            className="h-9 w-9 rounded-lg object-contain"
-          />
           <span className="font-display text-lg font-semibold tracking-tight">
             Auto<span className="text-gradient-primary">test</span>
           </span>

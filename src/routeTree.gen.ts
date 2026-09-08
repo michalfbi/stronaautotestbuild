@@ -9,25 +9,45 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UslugiRouteImport } from './routes/uslugi'
-import { Route as RaportVinRouteImport } from './routes/raport-vin'
-import { Route as PrzygotowanieDoSprzedazyRouteImport } from './routes/przygotowanie-do-sprzedazy'
-import { Route as PomocWZakupieRouteImport } from './routes/pomoc-w-zakupie'
-import { Route as ONasRouteImport } from './routes/o-nas'
-import { Route as KontaktRouteImport } from './routes/kontakt'
-import { Route as DlaFirmRouteImport } from './routes/dla-firm'
-import { Route as CennikRouteImport } from './routes/cennik'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CennikRouteImport } from './routes/cennik'
+import { Route as DlaFirmRouteImport } from './routes/dla-firm'
+import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as ONasRouteImport } from './routes/o-nas'
+import { Route as PomocWZakupieRouteImport } from './routes/pomoc-w-zakupie'
+import { Route as PrzygotowanieDoSprzedazyRouteImport } from './routes/przygotowanie-do-sprzedazy'
+import { Route as RaportVinRouteImport } from './routes/raport-vin'
+import { Route as UslugiRouteImport } from './routes/uslugi'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
-const UslugiRoute = UslugiRouteImport.update({
-  id: '/uslugi',
-  path: '/uslugi',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RaportVinRoute = RaportVinRouteImport.update({
-  id: '/raport-vin',
-  path: '/raport-vin',
+const CennikRoute = CennikRouteImport.update({
+  id: '/cennik',
+  path: '/cennik',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DlaFirmRoute = DlaFirmRouteImport.update({
+  id: '/dla-firm',
+  path: '/dla-firm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KontaktRoute = KontaktRouteImport.update({
+  id: '/kontakt',
+  path: '/kontakt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ONasRoute = ONasRouteImport.update({
+  id: '/o-nas',
+  path: '/o-nas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PomocWZakupieRoute = PomocWZakupieRouteImport.update({
+  id: '/pomoc-w-zakupie',
+  path: '/pomoc-w-zakupie',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrzygotowanieDoSprzedazyRoute =
@@ -36,34 +56,14 @@ const PrzygotowanieDoSprzedazyRoute =
     path: '/przygotowanie-do-sprzedazy',
     getParentRoute: () => rootRouteImport,
   } as any)
-const PomocWZakupieRoute = PomocWZakupieRouteImport.update({
-  id: '/pomoc-w-zakupie',
-  path: '/pomoc-w-zakupie',
+const RaportVinRoute = RaportVinRouteImport.update({
+  id: '/raport-vin',
+  path: '/raport-vin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ONasRoute = ONasRouteImport.update({
-  id: '/o-nas',
-  path: '/o-nas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const KontaktRoute = KontaktRouteImport.update({
-  id: '/kontakt',
-  path: '/kontakt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DlaFirmRoute = DlaFirmRouteImport.update({
-  id: '/dla-firm',
-  path: '/dla-firm',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CennikRoute = CennikRouteImport.update({
-  id: '/cennik',
-  path: '/cennik',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const UslugiRoute = UslugiRouteImport.update({
+  id: '/uslugi',
+  path: '/uslugi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LovableEmailTransactionalPreviewRoute =
@@ -164,53 +164,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/uslugi': {
-      id: '/uslugi'
-      path: '/uslugi'
-      fullPath: '/uslugi'
-      preLoaderRoute: typeof UslugiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/raport-vin': {
-      id: '/raport-vin'
-      path: '/raport-vin'
-      fullPath: '/raport-vin'
-      preLoaderRoute: typeof RaportVinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/przygotowanie-do-sprzedazy': {
-      id: '/przygotowanie-do-sprzedazy'
-      path: '/przygotowanie-do-sprzedazy'
-      fullPath: '/przygotowanie-do-sprzedazy'
-      preLoaderRoute: typeof PrzygotowanieDoSprzedazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pomoc-w-zakupie': {
-      id: '/pomoc-w-zakupie'
-      path: '/pomoc-w-zakupie'
-      fullPath: '/pomoc-w-zakupie'
-      preLoaderRoute: typeof PomocWZakupieRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/o-nas': {
-      id: '/o-nas'
-      path: '/o-nas'
-      fullPath: '/o-nas'
-      preLoaderRoute: typeof ONasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/kontakt': {
-      id: '/kontakt'
-      path: '/kontakt'
-      fullPath: '/kontakt'
-      preLoaderRoute: typeof KontaktRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dla-firm': {
-      id: '/dla-firm'
-      path: '/dla-firm'
-      fullPath: '/dla-firm'
-      preLoaderRoute: typeof DlaFirmRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cennik': {
@@ -220,11 +178,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CennikRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/dla-firm': {
+      id: '/dla-firm'
+      path: '/dla-firm'
+      fullPath: '/dla-firm'
+      preLoaderRoute: typeof DlaFirmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kontakt': {
+      id: '/kontakt'
+      path: '/kontakt'
+      fullPath: '/kontakt'
+      preLoaderRoute: typeof KontaktRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/o-nas': {
+      id: '/o-nas'
+      path: '/o-nas'
+      fullPath: '/o-nas'
+      preLoaderRoute: typeof ONasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pomoc-w-zakupie': {
+      id: '/pomoc-w-zakupie'
+      path: '/pomoc-w-zakupie'
+      fullPath: '/pomoc-w-zakupie'
+      preLoaderRoute: typeof PomocWZakupieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/przygotowanie-do-sprzedazy': {
+      id: '/przygotowanie-do-sprzedazy'
+      path: '/przygotowanie-do-sprzedazy'
+      fullPath: '/przygotowanie-do-sprzedazy'
+      preLoaderRoute: typeof PrzygotowanieDoSprzedazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/raport-vin': {
+      id: '/raport-vin'
+      path: '/raport-vin'
+      fullPath: '/raport-vin'
+      preLoaderRoute: typeof RaportVinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/uslugi': {
+      id: '/uslugi'
+      path: '/uslugi'
+      fullPath: '/uslugi'
+      preLoaderRoute: typeof UslugiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/transactional/preview': {
