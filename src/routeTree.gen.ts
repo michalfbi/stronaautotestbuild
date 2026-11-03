@@ -14,6 +14,7 @@ import { Route as CennikRouteImport } from './routes/cennik'
 import { Route as DlaFirmRouteImport } from './routes/dla-firm'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as ONasRouteImport } from './routes/o-nas'
+import { Route as PolitykaPrywatnosciRouteImport } from './routes/polityka-prywatnosci'
 import { Route as PomocWZakupieRouteImport } from './routes/pomoc-w-zakupie'
 import { Route as PrzygotowanieDoSprzedazyRouteImport } from './routes/przygotowanie-do-sprzedazy'
 import { Route as RaportVinRouteImport } from './routes/raport-vin'
@@ -43,6 +44,11 @@ const KontaktRoute = KontaktRouteImport.update({
 const ONasRoute = ONasRouteImport.update({
   id: '/o-nas',
   path: '/o-nas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PolitykaPrywatnosciRoute = PolitykaPrywatnosciRouteImport.update({
+  id: '/polityka-prywatnosci',
+  path: '/polityka-prywatnosci',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PomocWZakupieRoute = PomocWZakupieRouteImport.update({
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/dla-firm': typeof DlaFirmRoute
   '/kontakt': typeof KontaktRoute
   '/o-nas': typeof ONasRoute
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/pomoc-w-zakupie': typeof PomocWZakupieRoute
   '/przygotowanie-do-sprzedazy': typeof PrzygotowanieDoSprzedazyRoute
   '/raport-vin': typeof RaportVinRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/dla-firm': typeof DlaFirmRoute
   '/kontakt': typeof KontaktRoute
   '/o-nas': typeof ONasRoute
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/pomoc-w-zakupie': typeof PomocWZakupieRoute
   '/przygotowanie-do-sprzedazy': typeof PrzygotowanieDoSprzedazyRoute
   '/raport-vin': typeof RaportVinRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/dla-firm': typeof DlaFirmRoute
   '/kontakt': typeof KontaktRoute
   '/o-nas': typeof ONasRoute
+  '/polityka-prywatnosci': typeof PolitykaPrywatnosciRoute
   '/pomoc-w-zakupie': typeof PomocWZakupieRoute
   '/przygotowanie-do-sprzedazy': typeof PrzygotowanieDoSprzedazyRoute
   '/raport-vin': typeof RaportVinRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/dla-firm'
     | '/kontakt'
     | '/o-nas'
+    | '/polityka-prywatnosci'
     | '/pomoc-w-zakupie'
     | '/przygotowanie-do-sprzedazy'
     | '/raport-vin'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/dla-firm'
     | '/kontakt'
     | '/o-nas'
+    | '/polityka-prywatnosci'
     | '/pomoc-w-zakupie'
     | '/przygotowanie-do-sprzedazy'
     | '/raport-vin'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/dla-firm'
     | '/kontakt'
     | '/o-nas'
+    | '/polityka-prywatnosci'
     | '/pomoc-w-zakupie'
     | '/przygotowanie-do-sprzedazy'
     | '/raport-vin'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   DlaFirmRoute: typeof DlaFirmRoute
   KontaktRoute: typeof KontaktRoute
   ONasRoute: typeof ONasRoute
+  PolitykaPrywatnosciRoute: typeof PolitykaPrywatnosciRoute
   PomocWZakupieRoute: typeof PomocWZakupieRoute
   PrzygotowanieDoSprzedazyRoute: typeof PrzygotowanieDoSprzedazyRoute
   RaportVinRoute: typeof RaportVinRoute
@@ -197,6 +210,13 @@ declare module '@tanstack/react-router' {
       path: '/o-nas'
       fullPath: '/o-nas'
       preLoaderRoute: typeof ONasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/polityka-prywatnosci': {
+      id: '/polityka-prywatnosci'
+      path: '/polityka-prywatnosci'
+      fullPath: '/polityka-prywatnosci'
+      preLoaderRoute: typeof PolitykaPrywatnosciRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pomoc-w-zakupie': {
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   DlaFirmRoute: DlaFirmRoute,
   KontaktRoute: KontaktRoute,
   ONasRoute: ONasRoute,
+  PolitykaPrywatnosciRoute: PolitykaPrywatnosciRoute,
   PomocWZakupieRoute: PomocWZakupieRoute,
   PrzygotowanieDoSprzedazyRoute: PrzygotowanieDoSprzedazyRoute,
   RaportVinRoute: RaportVinRoute,

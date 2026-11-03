@@ -10,9 +10,9 @@ export const Route = createFileRoute("/pomoc-w-zakupie")({
       { name: "description", content: "Kompleksowa pomoc w zakupie samochodu: wyszukanie, weryfikacja, negocjacje ceny, transport i rejestracja. Pakiety od 799 zł. Cała Polska." },
       { property: "og:title", content: "Pomoc w zakupie auta — Autotest" },
       { property: "og:description", content: "Ekspert prowadzi Cię przez cały proces zakupu — od wyszukania do rejestracji." },
-      { property: "og:url", content: "/pomoc-w-zakupie" },
+      { property: "og:url", content: "https://autotest-ap.com/pomoc-w-zakupie" },
     ],
-    links: [{ rel: "canonical", href: "/pomoc-w-zakupie" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/pomoc-w-zakupie" }],
   }),
   component: PurchaseAssistance,
 });

@@ -9,9 +9,9 @@ export const Route = createFileRoute("/dla-firm")({
       { name: "description", content: "Kompleksowa obsługa firm i flot: zakup pojazdów, negocjacje grupowe, audyt kosztów, leasing i finansowanie. Oszczędź do 18% na TCO." },
       { property: "og:title", content: "Autotest dla firm i flot" },
       { property: "og:description", content: "Zakup pojazdów, negocjacje, leasing i audyt kosztów dla firm." },
-      { property: "og:url", content: "/dla-firm" },
+      { property: "og:url", content: "https://autotest-ap.com/dla-firm" },
     ],
-    links: [{ rel: "canonical", href: "/dla-firm" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/dla-firm" }],
   }),
   component: ForBusinessPage,
 });

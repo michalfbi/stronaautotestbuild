@@ -55,7 +55,8 @@ export async function countLeads(kind?: string): Promise<number | undefined> {
       method: 'POST',
       headers: {
         apikey: key,
-        Authorization: `Bearer ${key}`,
+        // Nowe klucze `sb_secret_...` nie są JWT — wysyłamy je tylko w nagłówku apikey.
+        ...(key.startsWith('sb_') ? {} : { Authorization: `Bearer ${key}` }),
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ _kind: kind ?? null }),

@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { submitLead } from "@/lib/leads.functions";
+import { VIN_REGEX, isValidPhone } from "@/lib/leads.schema";
+import { Honeypot, getTimeOnSiteSeconds, useVisitStart } from "@/components/LeadFormExtras";
 
 export const Route = createFileRoute("/raport-vin")({
   head: () => ({
@@ -16,39 +18,38 @@ export const Route = createFileRoute("/raport-vin")({
       { name: "description", content: "Zamów raport VIN i analizę ogłoszenia. Szczegółowa historia serwisowa, szkody, przebieg. Zniżka 20% na inspekcję. Odpowiedź w 24h." },
       { property: "og:title", content: "Raport VIN — Autotest" },
       { property: "og:description", content: "Pełna historia pojazdu przed zakupem. Uniknij ukrytych kosztów." },
-      { property: "og:url", content: "/raport-vin" },
+      { property: "og:url", content: "https://autotest-ap.com/raport-vin" },
     ],
-    links: [{ rel: "canonical", href: "/raport-vin" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/raport-vin" }],
   }),
   component: VinReportPage,
 });
 
-const VIN_REGEX = /^[A-HJ-NPR-Z0-9]{17}$/i;
-const PHONE_REGEX = /^[0-9+ ]{9,}$/;
 
 function VinReportPage() {
   const submit = useServerFn(submitLead);
   const [vin, setVin] = useState("");
   const [link, setLink] = useState("");
   const [phone, setPhone] = useState("");
-  const [terms, setTerms] = useState(false);
   const [privacy, setPrivacy] = useState(false);
+  const [website, setWebsite] = useState("");
   const [loading, setLoading] = useState(false);
+  useVisitStart();
 
-  const vinValid = VIN_REGEX.test(vin);
-  const phoneValid = PHONE_REGEX.test(phone);
-  const canSubmit = vinValid && phoneValid && terms && privacy;
+  const vinValid = VIN_REGEX.test(vin.trim());
+  const phoneValid = isValidPhone(phone);
+  const canSubmit = vinValid && phoneValid && privacy;
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!canSubmit) return;
+    if (loading || !canSubmit) return;
     setLoading(true);
     try {
       await submit({
-        data: { kind: "vin", vin: vin.trim().toUpperCase(), url: link.trim(), phone: phone.trim(), source: "raport-vin" },
+        data: { kind: "vin", vin: vin.trim().toUpperCase(), url: link.trim(), phone: phone.trim(), source: "raport-vin", timeOnSiteSeconds: getTimeOnSiteSeconds(), website },
       });
       toast.success("Zgłoszenie wysłane. Oddzwonimy w 24h.");
-      setVin(""); setLink(""); setPhone(""); setTerms(false); setPrivacy(false);
+      setVin(""); setLink(""); setPhone(""); setPrivacy(false);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Coś poszło nie tak.");
     } finally {
@@ -86,7 +87,7 @@ function VinReportPage() {
             </div>
           </div>
 
-          <form onSubmit={onSubmit} className="rounded-2xl border border-border bg-card/70 backdrop-blur p-6 sm:p-8 shadow-elegant">
+          <form onSubmit={onSubmit} className="relative rounded-2xl border border-border bg-card/70 backdrop-blur p-6 sm:p-8 shadow-elegant">
             <h2 className="font-display text-2xl font-bold">Zamów raport</h2>
             <p className="mt-1 text-sm text-muted-foreground">Wypełnij formularz — odpowiemy w 24h.</p>
 
@@ -113,7 +114,7 @@ function VinReportPage() {
               </div>
               <div>
                 <Label htmlFor="phone">Numer telefonu *</Label>
-                <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+48 500 000 000" className="mt-1.5" />
+                <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+48 500 000 000" autoComplete="tel" inputMode="tel" maxLength={40} className="mt-1.5" />
                 {phone && !phoneValid && (
                   <p className="mt-1 text-xs text-destructive flex items-center gap-1">
                     <AlertTriangle className="h-3 w-3" /> Podaj poprawny numer telefonu.
@@ -123,15 +124,18 @@ function VinReportPage() {
 
               <div className="space-y-3 pt-2">
                 <label className="flex items-start gap-3 text-sm">
-                  <Checkbox checked={terms} onCheckedChange={(v) => setTerms(v === true)} className="mt-0.5" />
-                  <span className="text-muted-foreground">Akceptuję regulamin usługi.</span>
-                </label>
-                <label className="flex items-start gap-3 text-sm">
                   <Checkbox checked={privacy} onCheckedChange={(v) => setPrivacy(v === true)} className="mt-0.5" />
-                  <span className="text-muted-foreground">Wyrażam zgodę na przetwarzanie danych osobowych w celu obsługi zgłoszenia.</span>
+                  <span className="text-muted-foreground">
+                    Zapoznałem(-am) się z{" "}
+                    <Link to="/polityka-prywatnosci" className="underline underline-offset-2 hover:text-foreground">
+                      polityką prywatności
+                    </Link>{" "}
+                    i chcę, żebyście skontaktowali się ze mną w sprawie raportu.
+                  </span>
                 </label>
               </div>
 
+              <Honeypot value={website} onChange={setWebsite} />
               <Button
                 type="submit"
                 disabled={!canSubmit || loading}
