@@ -27,9 +27,9 @@ export const Route = createFileRoute("/o-nas")({
         content:
           "Niezależny zespół rzeczoznawców i diagnostów. 1200+ sprawdzonych aut, ocena 5,0 w Google.",
       },
-      { property: "og:url", content: "/o-nas" },
+      { property: "og:url", content: "https://autotest-ap.com/o-nas" },
     ],
-    links: [{ rel: "canonical", href: "/o-nas" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/o-nas" }],
   }),
   component: AboutPage,
 });

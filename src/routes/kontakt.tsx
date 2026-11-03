@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { submitLead } from "@/lib/leads.functions";
+import { isValidPhone } from "@/lib/leads.schema";
+import { ConsentNote, Honeypot, getTimeOnSiteSeconds, useVisitStart } from "@/components/LeadFormExtras";
 
 export const Route = createFileRoute("/kontakt")({
   head: () => ({
@@ -16,14 +18,12 @@ export const Route = createFileRoute("/kontakt")({
       { name: "description", content: "Skontaktuj się z ekspertami Autotest. Konsultacja bezpłatna, odpowiadamy w 24h. Telefon, email, formularz kontaktowy." },
       { property: "og:title", content: "Kontakt — Autotest" },
       { property: "og:description", content: "Umów bezpłatną konsultację z ekspertem Autotest." },
-      { property: "og:url", content: "/kontakt" },
+      { property: "og:url", content: "https://autotest-ap.com/kontakt" },
     ],
-    links: [{ rel: "canonical", href: "/kontakt" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/kontakt" }],
   }),
   component: ContactPage,
 });
-
-const VISIT_KEY = "autotest_visit_started_at";
 
 function ContactPage() {
   const submit = useServerFn(submitLead);
@@ -31,20 +31,18 @@ function ContactPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!sessionStorage.getItem(VISIT_KEY)) {
-      sessionStorage.setItem(VISIT_KEY, String(Date.now()));
-    }
-  }, []);
+  useVisitStart();
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !phone.trim() || !message.trim()) return;
+    if (loading || !name.trim() || !phone.trim() || !message.trim()) return;
+    if (!isValidPhone(phone)) {
+      toast.error("Podaj poprawny numer telefonu (min. 9 cyfr).");
+      return;
+    }
     setLoading(true);
-    const startedAt = Number(sessionStorage.getItem(VISIT_KEY) || Date.now());
-    const timeOnSiteSeconds = Math.max(0, Math.round((Date.now() - startedAt) / 1000));
     try {
       await submit({
         data: {
@@ -54,7 +52,8 @@ function ContactPage() {
           phone: phone.trim(),
           message: message.trim(),
           source: "kontakt",
-          timeOnSiteSeconds,
+          timeOnSiteSeconds: getTimeOnSiteSeconds(),
+          website,
         },
       });
       toast.success("Dziękujemy! Odezwiemy się w ciągu 24h.");
@@ -107,21 +106,21 @@ function ContactPage() {
             </div>
           </div>
 
-          <form onSubmit={onSubmit} className="rounded-2xl border border-border bg-card/70 p-6 sm:p-8 shadow-elegant">
+          <form onSubmit={onSubmit} className="relative rounded-2xl border border-border bg-card/70 p-6 sm:p-8 shadow-elegant">
             <h2 className="font-display text-2xl font-bold">Wyślij wiadomość</h2>
             <div className="mt-6 space-y-4">
               <div>
                 <Label htmlFor="name">Imię i nazwisko *</Label>
-                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="mt-1.5" required maxLength={120} />
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" className="mt-1.5" required maxLength={120} />
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="phone">Telefon *</Label>
-                  <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="mt-1.5" required maxLength={40} />
+                  <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" inputMode="tel" className="mt-1.5" required maxLength={40} />
                 </div>
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1.5" maxLength={200} />
+                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" className="mt-1.5" maxLength={200} />
                 </div>
               </div>
               <div>
@@ -136,6 +135,8 @@ function ContactPage() {
                   maxLength={2000}
                 />
               </div>
+              <ConsentNote />
+              <Honeypot value={website} onChange={setWebsite} />
               <Button type="submit" disabled={loading} className="w-full h-12 bg-gradient-primary text-primary-foreground shadow-glow">
                 {loading ? "Wysyłam..." : (<>Wyślij wiadomość <ArrowRight className="ml-1 h-4 w-4" /></>)}
               </Button>

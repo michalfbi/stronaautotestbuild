@@ -76,7 +76,8 @@ Maile trafiają na: `dual1518@gmail.com` i `michalpakula12345@gmail.com`.
 4. Kliknij klucz → **API restrictions** → **Restrict key** → wybierz **Places API (New)** → Save.
 
 Twoja zmienna: `GOOGLE_API_KEY`.
-Bez tego klucza karuzela pokazuje opinie zapasowe (wpisane w kodzie) — strona działa normalnie.
+Bez tego klucza zamiast karuzeli pokazuje się link do wizytówki Google — strona działa normalnie.
+Opinie są cache’owane w workerze przez 6 h, więc API jest odpytywane rzadko.
 
 ---
 
@@ -110,7 +111,7 @@ VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_XXXXXXXX
 npm run deploy
 ```
 
-Skrypt robi `vite build`, a potem `wrangler deploy -c dist/server/wrangler.json`.
+Skrypt robi `vite build`, a potem `wrangler deploy -c .output/server/wrangler.json`.
 Na końcu dostaniesz adres w stylu `https://autotest-ap.<twoj-login>.workers.dev`.
 
 ### 4.4 Sekrety runtime (serwer) — wpisz po pierwszym deployu
@@ -118,15 +119,15 @@ Na końcu dostaniesz adres w stylu `https://autotest-ap.<twoj-login>.workers.dev
 Każda komenda zapyta o wartość — wklej ją i zatwierdź Enterem:
 
 ```bash
-wrangler secret put SUPABASE_URL                -c dist/server/wrangler.json
-wrangler secret put SUPABASE_PUBLISHABLE_KEY    -c dist/server/wrangler.json
-wrangler secret put SUPABASE_SERVICE_ROLE_KEY   -c dist/server/wrangler.json
-wrangler secret put RESEND_API_KEY               -c dist/server/wrangler.json
-wrangler secret put MAIL_FROM                    -c dist/server/wrangler.json
-wrangler secret put GOOGLE_API_KEY               -c dist/server/wrangler.json
+wrangler secret put SUPABASE_URL                -c .output/server/wrangler.json
+wrangler secret put SUPABASE_PUBLISHABLE_KEY    -c .output/server/wrangler.json
+wrangler secret put SUPABASE_SERVICE_ROLE_KEY   -c .output/server/wrangler.json
+wrangler secret put RESEND_API_KEY               -c .output/server/wrangler.json
+wrangler secret put MAIL_FROM                    -c .output/server/wrangler.json
+wrangler secret put GOOGLE_API_KEY               -c .output/server/wrangler.json
 ```
 
-Sprawdzenie listy: `wrangler secret list -c dist/server/wrangler.json`.
+Sprawdzenie listy: `wrangler secret list -c .output/server/wrangler.json`.
 
 Po dodaniu sekretów zrób jeszcze raz `npm run deploy`.
 
@@ -136,6 +137,20 @@ Po dodaniu sekretów zrób jeszcze raz `npm run deploy`.
 git pull
 npm run deploy
 ```
+
+---
+
+### 4.6 Automatyczny ping Supabase (bez GitHub Actions)
+
+Darmowy projekt Supabase usypia się po ~7 dniach bez ruchu. Worker ma wbudowany
+**Cron Trigger Cloudflare**, który codziennie o 06:17 UTC wysyła jedno zapytanie do bazy
+(funkcja `count_leads`). Harmonogram jest w `nitro.config.ts`, kod w `server/tasks/supabase-ping.ts`.
+
+- Włącza się sam przy `npm run deploy` (wpis `triggers.crons` w `.output/server/wrangler.json`).
+- Jest darmowy (Workers Free) i nie zużywa minut GitHub Actions.
+- Korzysta z sekretów `SUPABASE_URL` i `SUPABASE_SERVICE_ROLE_KEY`, które już ustawiłeś w kroku 4.4.
+- Podgląd: Cloudflare → **Workers & Pages** → worker → **Settings** → **Triggers** (cron)
+  oraz **Logs** — szukaj wpisu `[supabase:ping] HTTP 200`.
 
 ---
 
@@ -160,7 +175,7 @@ npm run deploy
 2. Supabase → **Table Editor** → `leads` → powinien pojawić się nowy wiersz.
 3. Skrzynka `dual1518@gmail.com` → mail „Potencjalny klient przysłał link do pojazdu”.
 4. Resend → **Logs** → status `delivered`.
-5. Jeśli coś nie działa: `wrangler tail -c dist/server/wrangler.json` pokazuje logi na żywo.
+5. Jeśli coś nie działa: `wrangler tail -c .output/server/wrangler.json` pokazuje logi na żywo.
 
 ---
 
@@ -185,4 +200,4 @@ npm run deploy
 | Formularz zapisuje się, ale nie ma maila | brak `RESEND_API_KEY` albo domena w Resend jeszcze nie `Verified` |
 | Karuzela pokazuje stare opinie | brak/zły `GOOGLE_API_KEY` albo nie włączone **Places API (New)** |
 | `permission denied for table leads` | nie wykonano całego `self-hosting/schema.sql` (brakuje `GRANT`) |
-| `wrangler deploy` nie widzi konfiguracji | uruchamiaj po buildzie i z flagą `-c dist/server/wrangler.json` |
+| `wrangler deploy` nie widzi konfiguracji | uruchamiaj po buildzie i z flagą `-c .output/server/wrangler.json` |

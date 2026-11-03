@@ -9,9 +9,9 @@ export const Route = createFileRoute("/uslugi")({
       { name: "description", content: "Pełen katalog usług Autotest: pomoc w zakupie auta, inspekcja mobilna, negocjacje ceny, raport VIN, przygotowanie do sprzedaży, ubezpieczenia. Ceny od 300 zł." },
       { property: "og:title", content: "Usługi Autotest — pełen katalog" },
       { property: "og:description", content: "Katalog usług: inspekcja mobilna, pomoc w zakupie, raport VIN, przygotowanie do sprzedaży." },
-      { property: "og:url", content: "/uslugi" },
+      { property: "og:url", content: "https://autotest-ap.com/uslugi" },
     ],
-    links: [{ rel: "canonical", href: "/uslugi" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/uslugi" }],
   }),
   component: ServicesPage,
 });

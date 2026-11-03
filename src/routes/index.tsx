@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import {
   ArrowRight, CheckCircle2, Shield, Search, FileText, Gauge,
@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { submitLead } from "@/lib/leads.functions";
 import { GoogleReviews } from "@/components/GoogleReviews";
+import { ConsentNote, Honeypot, getTimeOnSiteSeconds, useVisitStart } from "@/components/LeadFormExtras";
+import { isValidPhone } from "@/lib/leads.schema";
 import heroCar from "@/assets/hero-car.jpg";
 
 export const Route = createFileRoute("/")({
@@ -19,34 +21,30 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Ekspercka inspekcja pojazdów, raport VIN, negocjacje ceny i kompleksowa pomoc w zakupie samochodu. Chronimy Twoje pieniądze na każdym etapie transakcji." },
       { property: "og:title", content: "Autotest — Niezależna weryfikacja i pomoc w zakupie auta" },
       { property: "og:description", content: "Ekspercka inspekcja pojazdów, raport VIN, negocjacje ceny i pomoc w zakupie samochodu w całej Polsce." },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://autotest-ap.com/" },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/" }],
   }),
   component: Home,
 });
-
-const VISIT_KEY = "autotest_visit_started_at";
 
 function Home() {
   const submit = useServerFn(submitLead);
   const [url, setUrl] = useState("");
   const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (!sessionStorage.getItem(VISIT_KEY)) {
-      sessionStorage.setItem(VISIT_KEY, String(Date.now()));
-    }
-  }, []);
+  useVisitStart();
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!url.trim() || !phone.trim()) return;
+    if (loading || !url.trim() || !phone.trim()) return;
+    if (!isValidPhone(phone)) {
+      toast.error("Podaj poprawny numer telefonu (min. 9 cyfr).");
+      return;
+    }
     setLoading(true);
-    const startedAt = Number(sessionStorage.getItem(VISIT_KEY) || Date.now());
-    const timeOnSiteSeconds = Math.max(0, Math.round((Date.now() - startedAt) / 1000));
     try {
       await submit({
         data: {
@@ -54,7 +52,8 @@ function Home() {
           url: url.trim(),
           phone: phone.trim(),
           source: "home-hero",
-          timeOnSiteSeconds,
+          timeOnSiteSeconds: getTimeOnSiteSeconds(),
+          website,
         },
       });
       toast.success("Zgłoszenie wysłane. Oddzwonimy w ciągu 24h.");
@@ -85,12 +84,14 @@ function Home() {
               Chronimy przed wadami ukrytymi i przepłacaniem.
             </p>
 
-            <form onSubmit={onSubmit} className="mt-8 rounded-2xl border border-border bg-card/60 backdrop-blur p-4 sm:p-5 shadow-elegant">
-              <div className="grid gap-3 sm:grid-cols-[1fr,200px,auto]">
+            <form onSubmit={onSubmit} className="relative mt-8 rounded-2xl border border-border bg-card/60 backdrop-blur p-4 sm:p-5 shadow-elegant">
+              <div className="grid gap-3 sm:grid-cols-[1fr_200px_auto]">
                 <Input
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   placeholder="Wklej link do ogłoszenia (OLX, Otomoto...)"
+                  aria-label="Link do ogłoszenia"
+                  maxLength={600}
                   className="h-12"
                   required
                 />
@@ -98,6 +99,10 @@ function Home() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Numer telefonu"
+                  aria-label="Numer telefonu"
+                  autoComplete="tel"
+                  inputMode="tel"
+                  maxLength={40}
                   className="h-12"
                   type="tel"
                   required
@@ -113,6 +118,10 @@ function Home() {
               <p className="mt-3 text-xs text-muted-foreground">
                 Analiza bezpłatna. Odpowiadamy w 24h. Nie musisz nic decydować od razu.
               </p>
+              <div className="mt-2">
+                <ConsentNote />
+              </div>
+              <Honeypot value={website} onChange={setWebsite} />
             </form>
 
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
@@ -131,18 +140,18 @@ function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl border border-primary/30 bg-gradient-card p-6 sm:p-10 lg:p-12 shadow-elegant relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-primary opacity-10 blur-3xl" />
-            <div className="relative grid lg:grid-cols-[1fr,auto] gap-8 items-center">
+            <div className="relative grid lg:grid-cols-[1fr_auto] gap-8 items-center">
               <div className="max-w-2xl">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                   <FileText className="h-3.5 w-3.5" /> Zanim zdecydujesz o zakupie
                 </span>
                 <h2 className="mt-4 font-display text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
                   Najpierw poznaj historię pojazdu.<br />
-                  <span className="text-gradient-primary">Zamów raport VIN — już od 100 zł.</span>
+                  <span className="text-gradient-primary">Zamów raport VIN — już od 99 zł.</span>
                 </h2>
                 <p className="mt-4 text-muted-foreground">
                   Zanim zdecydujesz się na kosztowną inspekcję, sprawdź historię auta po numerze VIN:
-                  szkody, przebieg, kradzieże i wcześniejsze właściciele. Szybka weryfikacja za przystępną cenę,
+                  szkody, przebieg, kradzieże i wcześniejszych właścicieli. Szybka weryfikacja za przystępną cenę,
                   która pozwoli Ci podjąć właściwą decyzję.
                 </p>
                 <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">

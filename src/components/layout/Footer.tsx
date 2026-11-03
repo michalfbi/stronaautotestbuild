@@ -7,8 +7,18 @@ const COLS = [
     links: [
       { to: "/pomoc-w-zakupie", label: "Pomoc w zakupie" },
       { to: "/przygotowanie-do-sprzedazy", label: "Przygotowanie do sprzedaży" },
-{ to: "/uslugi", label: "Wszystkie usługi" },
+      { to: "/raport-vin", label: "Raport VIN" },
+      { to: "/dla-firm", label: "Dla firm i flot" },
+      { to: "/uslugi", label: "Wszystkie usługi" },
       { to: "/cennik", label: "Cennik" },
+    ],
+  },
+  {
+    title: "Firma",
+    links: [
+      { to: "/o-nas", label: "O nas" },
+      { to: "/kontakt", label: "Kontakt" },
+      { to: "/polityka-prywatnosci", label: "Polityka prywatności" },
     ],
   },
 ] as const;
@@ -51,8 +61,8 @@ export function Footer() {
         </div>
 
         <div className="mt-10 pt-8 border-t border-border/60 grid gap-4 md:grid-cols-3 text-sm text-muted-foreground">
-          <div className="inline-flex items-center gap-2"><Phone className="h-4 w-4 text-primary" /> +48 690 976 790</div>
-          <div className="inline-flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> dual1518@gmail.com</div>
+          <a href="tel:+48690976790" className="inline-flex items-center gap-2 hover:text-foreground"><Phone className="h-4 w-4 text-primary" /> +48 690 976 790</a>
+          <a href="mailto:dual1518@gmail.com" className="inline-flex items-center gap-2 hover:text-foreground"><Mail className="h-4 w-4 text-primary" /> dual1518@gmail.com</a>
           <div className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" /> Cała Polska</div>
         </div>
 

@@ -18,9 +18,8 @@ import { CallNowPopup } from "@/components/CallNowPopup";
 
 function NotFoundComponent() {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Navbar />
-      <div className="flex-1 flex items-center justify-center px-4 pt-24">
+    <div className="flex flex-1 items-center justify-center px-4 py-24">
+      <div>
         <div className="max-w-md text-center">
           <h1 className="text-7xl font-bold text-gradient-primary">404</h1>
           <h2 className="mt-4 text-xl font-semibold">Nie znaleziono strony</h2>
@@ -37,7 +36,6 @@ function NotFoundComponent() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
@@ -72,6 +70,34 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const SITE_URL = "https://autotest-ap.com";
+
+/** Dane firmy dla Google (wizytówka w wynikach wyszukiwania). */
+const LOCAL_BUSINESS = {
+  "@context": "https://schema.org",
+  "@type": "AutomotiveBusiness",
+  name: "Autotest",
+  url: SITE_URL,
+  image: `${SITE_URL}/og-image.jpg`,
+  telephone: "+48690976790",
+  email: "dual1518@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Kozów 26A",
+    addressCountry: "PL",
+  },
+  areaServed: { "@type": "Country", name: "Polska" },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "08:00",
+      closes: "20:00",
+    },
+  ],
+  priceRange: "od 99 zł",
+};
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -81,6 +107,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Autotest" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:locale", content: "pl_PL" },
+      { property: "og:image", content: `${SITE_URL}/og-image.jpg` },
+      { name: "twitter:image", content: `${SITE_URL}/og-image.jpg` },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(LOCAL_BUSINESS),
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

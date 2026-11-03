@@ -7,10 +7,25 @@ import { cn } from "@/lib/utils";
 const STORAGE_KEY = "autotest_call_popup_dismissed_at";
 const DELAY_MS = 20000;
 const SNOOZE_MS = 1000 * 60 * 60 * 24; // 24h
+/** Godziny pracy (czas polski), zgodne ze stroną Kontakt: Pn–Nd 8:00–20:00. */
+const OPEN_HOUR = 8;
+const CLOSE_HOUR = 20;
+
+function isOpenNow(): boolean {
+  const hour = Number(
+    new Intl.DateTimeFormat("pl-PL", {
+      hour: "numeric",
+      hourCycle: "h23",
+      timeZone: "Europe/Warsaw",
+    }).format(new Date()),
+  );
+  return hour >= OPEN_HOUR && hour < CLOSE_HOUR;
+}
 
 export function CallNowPopup() {
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     let raw: string | null = null;
@@ -21,7 +36,10 @@ export function CallNowPopup() {
     }
     if (raw && Date.now() - Number(raw) < SNOOZE_MS) return;
 
-    const timer = window.setTimeout(() => setVisible(true), DELAY_MS);
+    const timer = window.setTimeout(() => {
+      setOpen(isOpenNow());
+      setVisible(true);
+    }, DELAY_MS);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -44,7 +62,9 @@ export function CallNowPopup() {
       className={cn(
         "fixed z-[60] left-4 right-4 bottom-4 sm:left-auto sm:right-6 sm:bottom-6 sm:w-[360px]",
         "rounded-2xl border border-primary/40 bg-surface/95 p-5 shadow-glow backdrop-blur-xl",
-        closing ? "animate-out fade-out slide-out-to-bottom-4" : "animate-in fade-in slide-in-from-bottom-6",
+        closing
+          ? "animate-out fade-out slide-out-to-bottom-4"
+          : "animate-in fade-in slide-in-from-bottom-6",
         "duration-300",
       )}
     >
@@ -58,11 +78,17 @@ export function CallNowPopup() {
 
       <div className="flex items-center gap-2 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-1">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/70" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-          </span>
-          Jesteśmy dostępni teraz
+          {open ? (
+            <>
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/70" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+              </span>
+              Jesteśmy dostępni teraz
+            </>
+          ) : (
+            <>Odbieramy codziennie 8:00–20:00</>
+          )}
         </span>
         <span className="inline-flex items-center gap-1">
           <Star className="h-3 w-3 fill-primary text-primary" /> 5,0 w Google
@@ -70,11 +96,13 @@ export function CallNowPopup() {
       </div>
 
       <h3 className="mt-3 font-display text-lg font-semibold leading-snug">
-        Masz auto na oku? Zadzwoń teraz.
+        {open
+          ? "Masz auto na oku? Zadzwoń teraz."
+          : "Masz auto na oku? Zostaw wiadomość."}
       </h3>
       <p className="mt-1.5 text-sm text-muted-foreground">
-        Bezpłatna, krótka konsultacja — powiemy, czy oferta jest warta dojazdu i ile powinna kosztować
-        inspekcja.
+        Bezpłatna, krótka konsultacja — powiemy, czy oferta jest warta dojazdu i
+        ile powinna kosztować inspekcja.
       </p>
 
       <div className="mt-4 flex flex-col gap-2">
@@ -93,8 +121,8 @@ export function CallNowPopup() {
       </div>
 
       <p className="mt-3 flex items-center gap-1.5 text-[11px] text-muted-foreground">
-        <ShieldCheck className="h-3.5 w-3.5 text-primary" /> Niezależni eksperci — bez powiązań z
-        komisami
+        <ShieldCheck className="h-3.5 w-3.5 text-primary" /> Niezależni eksperci
+        — bez powiązań z komisami
       </p>
     </div>
   );

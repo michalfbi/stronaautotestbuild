@@ -9,9 +9,9 @@ export const Route = createFileRoute("/przygotowanie-do-sprzedazy")({
       { name: "description", content: "Profesjonalne przygotowanie samochodu do sprzedaży: diagnostyka, detailing, sesja zdjęciowa, ogłoszenie i wsparcie w negocjacjach. Pakiety od 300 zł." },
       { property: "og:title", content: "Przygotowanie do sprzedaży — Autotest" },
       { property: "og:description", content: "Auto sprzeda się szybciej i drożej — zajmiemy się każdym detalem." },
-      { property: "og:url", content: "/przygotowanie-do-sprzedazy" },
+      { property: "og:url", content: "https://autotest-ap.com/przygotowanie-do-sprzedazy" },
     ],
-    links: [{ rel: "canonical", href: "/przygotowanie-do-sprzedazy" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/przygotowanie-do-sprzedazy" }],
   }),
   component: CarPreparationPage,
 });

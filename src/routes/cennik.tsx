@@ -23,9 +23,9 @@ content:
         content:
           "Inspekcja mobilna od 300 zł, raport VIN od 99 zł, pakiety pomocy w zakupie od 799 zł.",
       },
-      { property: "og:url", content: "/cennik" },
+      { property: "og:url", content: "https://autotest-ap.com/cennik" },
     ],
-    links: [{ rel: "canonical", href: "/cennik" }],
+    links: [{ rel: "canonical", href: "https://autotest-ap.com/cennik" }],
   }),
   component: PricingPage,
 });
