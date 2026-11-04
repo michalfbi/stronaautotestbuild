@@ -35,15 +35,22 @@ export const submitLead = createServerFn({ method: "POST" })
     }
 
     const { createClient } = await import("@supabase/supabase-js");
-    const url = (process.env.SUPABASE_URL ||
-      import.meta.env.VITE_SUPABASE_URL) as string;
-    const key = (process.env.SUPABASE_PUBLISHABLE_KEY ||
+    const { normalizeSupabaseUrl } = await import("./supabase-url");
+    const url = normalizeSupabaseUrl(
+      process.env.SUPABASE_URL ||
+        (import.meta.env.VITE_SUPABASE_URL as string | undefined),
+    );
+    // Na serwerze najpierw klucz serwisowy (omija RLS — zapis zadziała nawet przy
+    // brakującej polityce INSERT), a dopiero potem klucz publiczny.
+    const key = (process.env.SUPABASE_SERVICE_ROLE_KEY ||
+      process.env.SUPABASE_PUBLISHABLE_KEY ||
       import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-      import.meta.env.VITE_SUPABASE_ANON_KEY) as string;
+      import.meta.env.VITE_SUPABASE_ANON_KEY) as string | undefined;
     if (!url || !key) {
-      console.error(
-        "[submitLead] brak SUPABASE_URL / SUPABASE_PUBLISHABLE_KEY",
-      );
+      console.error("[submitLead] brak SUPABASE_URL albo klucza Supabase", {
+        hasUrl: Boolean(url),
+        hasKey: Boolean(key),
+      });
       throw new Error(
         "Formularz chwilowo nie działa. Zadzwoń: +48 690 976 790.",
       );
@@ -79,7 +86,19 @@ export const submitLead = createServerFn({ method: "POST" })
 
     const { error } = await supabase.from("leads").insert(payload as never);
     if (error) {
-      console.error("[submitLead] insert failed", error);
+      // Szczegóły trafiają do logów Cloudflare (Workers → Logs), użytkownik widzi prosty komunikat.
+      console.error("[submitLead] insert failed", {
+        host: new URL(url).host,
+        keyType:
+          key.startsWith("sb_secret_") ||
+          key === process.env.SUPABASE_SERVICE_ROLE_KEY
+            ? "service"
+            : "public",
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      });
       throw new Error(
         "Nie udało się zapisać zgłoszenia. Spróbuj ponownie lub zadzwoń: +48 690 976 790.",
       );
