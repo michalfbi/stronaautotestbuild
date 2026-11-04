@@ -6,7 +6,7 @@ export const Route = createFileRoute("/dla-firm")({
   head: () => ({
     meta: [
       { title: "Autotest dla firm i flot | Zakup i audyt pojazdów firmowych" },
-      { name: "description", content: "Kompleksowa obsługa firm i flot: zakup pojazdów, negocjacje grupowe, audyt kosztów, leasing i finansowanie. Oszczędź do 18% na TCO." },
+      { name: "description", content: "Kompleksowa obsługa firm i flot: zakup pojazdów, negocjacje grupowe, audyt kosztów, leasing i finansowanie. Niższe koszty floty dzięki niezależnej weryfikacji." },
       { property: "og:title", content: "Autotest dla firm i flot" },
       { property: "og:description", content: "Zakup pojazdów, negocjacje, leasing i audyt kosztów dla firm." },
       { property: "og:url", content: "https://autotest-ap.com/dla-firm" },
@@ -24,9 +24,9 @@ const SERVICES = [
 ];
 
 const RESULTS = [
-  { v: "18%", l: "Średnia oszczędność na TCO" },
   { v: "72h", l: "Czas przygotowania pierwszej rekomendacji" },
-  { v: "300+", l: "Zrealizowanych zakupów flotowych" },
+  { v: "Raport", l: "Pisemny, ze zdjęciami, dla każdego pojazdu" },
+  { v: "Cała Polska", l: "Dojeżdżamy do każdej lokalizacji floty" },
 ];
 
 function ForBusinessPage() {

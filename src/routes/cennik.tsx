@@ -21,7 +21,7 @@ content:
       {
         property: "og:description",
         content:
-          "Inspekcja mobilna od 300 zł, raport VIN od 99 zł, pakiety pomocy w zakupie od 799 zł.",
+          "Inspekcja mobilna od 300 zł, raport VIN od 99 zł, pakiety pomocy w zakupie od 500 zł.",
       },
       { property: "og:url", content: "https://autotest-ap.com/cennik" },
     ],
@@ -115,7 +115,7 @@ const FAQ = [
   },
   {
     q: "Kiedy płacę za usługę?",
-    a: "Po wykonaniu inspekcji i przekazaniu raportu. W pakietach Standard i Premium pobieramy zaliczkę 30% na start, a resztę po zakończeniu procesu zakupu.",
+    a: "Po wykonaniu inspekcji i przekazaniu raportu. W pakiecie Standard pobieramy zaliczkę 30% na start, a resztę po zakończeniu procesu zakupu.",
   },
   {
     q: "Co jeśli auto okaże się w złym stanie?",
