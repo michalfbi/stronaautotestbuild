@@ -1,3 +1,4 @@
+import { normalizeSupabaseUrl } from './supabase-url'
 /** Server-only helpers for enriching lead notifications (geo, counters, formatting). */
 
 export interface GeoInfo {
@@ -47,7 +48,7 @@ export async function resolveGeo(headers: Headers): Promise<GeoInfo> {
 }
 
 export async function countLeads(kind?: string): Promise<number | undefined> {
-  const url = process.env['SUPABASE_URL']
+  const url = normalizeSupabaseUrl(process.env['SUPABASE_URL'])
   const key = process.env['SUPABASE_SERVICE_ROLE_KEY']
   if (!url || !key) return undefined
   try {

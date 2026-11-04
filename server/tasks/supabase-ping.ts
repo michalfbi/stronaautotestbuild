@@ -1,4 +1,5 @@
 import { defineTask } from "nitro/task";
+import { normalizeSupabaseUrl } from "../../src/lib/supabase-url";
 
 /**
  * Wysyła jedno lekkie zapytanie do bazy Supabase, żeby darmowy projekt nie został uśpiony.
@@ -18,7 +19,7 @@ export default defineTask({
       (globalThis as { __env__?: Record<string, string | undefined> })
         .__env__ ?? {};
     const env = (name: string) => cfEnv[name] ?? process.env[name];
-    const url = env("SUPABASE_URL");
+    const url = normalizeSupabaseUrl(env("SUPABASE_URL"));
     const serviceKey = env("SUPABASE_SERVICE_ROLE_KEY");
     const publicKey = env("SUPABASE_PUBLISHABLE_KEY");
     const key = serviceKey || publicKey;
