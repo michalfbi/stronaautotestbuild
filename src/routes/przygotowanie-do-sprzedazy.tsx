@@ -42,7 +42,7 @@ function CarPreparationPage() {
           </h1>
           <p className="mt-6 text-lg text-muted-foreground">
             Diagnostyka, detailing, sesja zdjęciowa, ogłoszenie i wsparcie w rozmowach z kupującymi.
-            Sprzedaj o 8–15% drożej niż średnia rynkowa.
+            Zadbane auto z dobrymi zdjęciami i kompletem dokumentów przyciąga więcej kupujących i lepsze oferty.
           </p>
           <Button asChild size="lg" className="mt-8 bg-gradient-primary text-primary-foreground shadow-glow">
             <Link to="/kontakt">Wyceń przygotowanie <ArrowRight className="ml-2 h-4 w-4" /></Link>

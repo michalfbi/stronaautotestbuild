@@ -128,9 +128,6 @@ export function GoogleReviews() {
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-semibold truncate">{r.author}</span>
-                  <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-success">
-                    <ShieldCheck className="h-3 w-3" /> zweryfikowana
-                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <Stars value={r.rating} size={12} />
@@ -285,7 +282,7 @@ export function GoogleReviews() {
       {/* Trust footer */}
       <div className="relative mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
         <ShieldCheck className="h-3.5 w-3.5 text-success" />
-        Wszystkie opinie pochodzą od zweryfikowanych klientów Google
+        Opinie wyświetlane bezpośrednio z naszej wizytówki Google
       </div>
     </div>
   );

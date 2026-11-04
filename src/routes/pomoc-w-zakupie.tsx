@@ -7,7 +7,7 @@ export const Route = createFileRoute("/pomoc-w-zakupie")({
   head: () => ({
     meta: [
       { title: "Pomoc w zakupie auta — Autotest | Ekspert prowadzi Cię za rękę" },
-      { name: "description", content: "Kompleksowa pomoc w zakupie samochodu: wyszukanie, weryfikacja, negocjacje ceny, transport i rejestracja. Pakiety od 799 zł. Cała Polska." },
+      { name: "description", content: "Kompleksowa pomoc w zakupie samochodu: wyszukanie, weryfikacja, negocjacje ceny, transport i rejestracja. Pakiety od 500 zł. Cała Polska." },
       { property: "og:title", content: "Pomoc w zakupie auta — Autotest" },
       { property: "og:description", content: "Ekspert prowadzi Cię przez cały proces zakupu — od wyszukania do rejestracji." },
       { property: "og:url", content: "https://autotest-ap.com/pomoc-w-zakupie" },
@@ -37,7 +37,7 @@ const FAQ = [
   { q: "Czy jeździcie po całej Polsce?", a: "Tak. Dojeżdżamy do każdego miasta. Doliczamy do ceny pakietu koszty dojazdu." },
   { q: "Jak sprawdzacie pojazd przed zakupem?", a: "Weryfikujemy historię VIN, sprawdzamy przebieg i stany liczników, wykonujemy diagnostykę komputerową OBD oraz dokładne oględziny techniczne i wizualne, a także sprawdzamy dokumenty i stan prawny pojazdu." },
   
-  { q: "Czy negocjujecie cenę w moim imieniu?", a: "Tak. Prowadzimy negocjacje cenowe z sprzedającym i dbamy o to, byś nie przepłacił. Statystycznie kupujemy pojazdy średnio 12% taniej niż cena wyjściowa." },
+  { q: "Czy negocjujecie cenę w moim imieniu?", a: "Tak. Prowadzimy negocjacje cenowe z sprzedającym i dbamy o to, byś nie przepłacił. Argumenty z inspekcji (usterki, koszty napraw, historia) przedstawiamy sprzedającemu tak, żeby realnie obniżyć cenę." },
   { q: "Czy dostanę raport na piśmie?", a: "Tak — zawsze. Otrzymujesz pełen raport PDF z fotografiami, wynikami diagnostyki i rekomendacją, wraz ze szczegółowym uzasadnieniem naszej decyzji." },
   { q: "Czy mogę odstąpić od usługi w trakcie?", a: "Tak. Na każdym etapie możesz zrezygnować bez podawania przyczyny. Rozliczamy się wyłącznie za faktycznie wykonane etapy, a pozostała część jest zwracana." },
   
@@ -57,7 +57,6 @@ function PurchaseAssistance() {
           </h1>
           <p className="mt-6 text-lg text-muted-foreground">
             Ty wybierasz model. My znajdujemy najlepszy egzemplarz, weryfikujemy, negocjujemy cenę i finalizujemy transakcję.
-            Średnio 12% niżej niż cena wyjściowa.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg" className="bg-gradient-primary text-primary-foreground shadow-glow">

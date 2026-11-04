@@ -125,7 +125,7 @@ function Home() {
             </form>
 
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
-              <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> 1000+ zleceń</span>
+              <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Niezależni od komisów</span>
               <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Ocena 5/5</span>
               <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Cała Polska</span>
             </div>
@@ -163,7 +163,7 @@ function Home() {
               <div className="flex flex-col items-start lg:items-end gap-4">
                 <div className="text-center lg:text-right">
                   <p className="text-sm text-muted-foreground">Cena raportu</p>
-                  <p className="font-display text-4xl sm:text-5xl font-bold text-gradient-primary">100 zł</p>
+                  <p className="font-display text-4xl sm:text-5xl font-bold text-gradient-primary">99 zł</p>
                 </div>
                 <Button asChild size="lg" className="bg-gradient-primary text-primary-foreground shadow-glow">
                   <Link to="/raport-vin">Zamów raport VIN <ArrowRight className="ml-2 h-4 w-4" /></Link>
@@ -210,8 +210,8 @@ function Home() {
                 Co dokładnie sprawdzamy w Twoim aucie
               </h2>
               <p className="mt-4 text-muted-foreground">
-                Kompleksowa procedura, dzięki której wykrywamy średnio 3–5 istotnych usterek na inspekcję.
-                Nasi klienci negocjują średnio 12% zniżki dzięki naszym raportom.
+                Kompleksowa procedura, która pokazuje realny stan auta, a nie to, co napisano w ogłoszeniu.
+                Raport ze zdjęciami daje Ci twarde argumenty do negocjacji ceny.
               </p>
               <Button asChild className="mt-8 bg-gradient-primary text-primary-foreground shadow-glow">
                 <Link to="/uslugi">Zobacz wszystkie usługi <ArrowRight className="ml-2 h-4 w-4" /></Link>
@@ -247,7 +247,7 @@ function Home() {
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[
               { icon: AlertTriangle, t: "Chronimy przed wadami ukrytymi", d: "Wykrywamy naprawy powypadkowe, przekręcony licznik, ukryte awarie." },
-              { icon: Car, t: "Negocjujemy cenę", d: "Twarde argumenty z raportu = średnio 12% niżej niż oferta wyjściowa." },
+              { icon: Car, t: "Negocjujemy cenę", d: "Każda wykryta usterka to konkretny argument, żeby zapłacić mniej." },
               { icon: MapPin, t: "Cała Polska", d: "Dojeżdżamy do każdego miasta. Weryfikacja mobilna 7 dni w tygodniu." },
             ].map((f) => (
               <div key={f.t} className="rounded-2xl border border-border bg-gradient-card p-6">

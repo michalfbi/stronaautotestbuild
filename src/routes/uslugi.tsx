@@ -31,7 +31,7 @@ const CATEGORIES: Category[] = [
     title: "Weryfikacja i zakup",
     desc: "Wybierasz model — my dbamy, byś nie przepłacił i nie kupił wady ukrytej.",
     services: [
-      { icon: Car, t: "Kompleksowa pomoc w zakupie", d: "Od wyszukania idealnego egzemplarza, przez rygorystyczną weryfikację, po finalizację transakcji.", price: "od 799 zł", link: "/pomoc-w-zakupie", featured: true },
+      { icon: Car, t: "Kompleksowa pomoc w zakupie", d: "Od wyszukania idealnego egzemplarza, przez rygorystyczną weryfikację, po finalizację transakcji.", price: "od 500 zł", link: "/pomoc-w-zakupie", featured: true },
       { icon: Search, t: "Inspekcja mobilna pojazdu", d: "Sprawdzenie auta w dowolnym miejscu w Polsce. Diagnostyka komputerowa, pomiar lakieru, test drogowy.", price: "od 300 zł" },
       { icon: DollarSign, t: "Wycena i twarde negocjacje", d: "Znalazłeś auto? Ocenimy jego realną wartość i profesjonalnie zbijemy cenę.", price: "od 199 zł" },
       { icon: FileCheck, t: "Raport VIN i analiza ogłoszenia", d: "Kompletna historia pojazdu, szkody, przebieg. Weryfikacja rzetelności oferty przed dojazdem.", price: "od 99 zł", link: "/raport-vin" },

@@ -19,13 +19,13 @@ export const Route = createFileRoute("/o-nas")({
       {
         name: "description",
         content:
-          "Poznaj Autotest: niezależny zespół rzeczoznawców i diagnostów. Ponad 1200 sprawdzonych aut, 5,0 w opiniach Google. Działamy w całej Polsce, bez powiązań z komisami.",
+          "Poznaj Autotest: niezależny zespół rzeczoznawców i diagnostów z oceną 5,0 w opiniach Google. Działamy w całej Polsce, bez powiązań z komisami.",
       },
       { property: "og:title", content: "O nas — Autotest" },
       {
         property: "og:description",
         content:
-          "Niezależny zespół rzeczoznawców i diagnostów. 1200+ sprawdzonych aut, ocena 5,0 w Google.",
+          "Niezależny zespół rzeczoznawców i diagnostów. Ocena 5,0 w Google.",
       },
       { property: "og:url", content: "https://autotest-ap.com/o-nas" },
     ],
@@ -35,10 +35,10 @@ export const Route = createFileRoute("/o-nas")({
 });
 
 const STATS = [
-  { icon: Gauge, value: "1000+", label: "sprawdzonych samochodów" },
-  { icon: Award, value: "8 lat", label: "doświadczenia w branży" },
+  { icon: Gauge, value: "0", label: "powiązań z komisami i handlarzami" },
+  { icon: Award, value: "Od 2018", label: "sprawdzamy auta przed zakupem" },
   { icon: ShieldCheck, value: "5,0", label: "Ocena w Google" },
-  { icon: MapPin, value: "Cała Polska ", label: "\n" },
+  { icon: MapPin, value: "Cała Polska", label: "dojeżdżamy do auta" },
 ];
 
 const VALUES = [
@@ -69,7 +69,7 @@ const TIMELINE = [
   { year: "2020", text: "Własny sprzęt diagnostyczny i mobilny serwis: dojeżdżamy do auta w dowolne miejsce w Polsce." },
   { year: "2022", text: "Rozszerzenie oferty o pomoc w zakupie „od A do Z”, negocjacje i przygotowanie aut do sprzedaży." },
   { year: "2024", text: "Obsługa firm i flot: przeglądy poleasingowe, wyceny i cykliczne kontrole stanu pojazdów." },
-  { year: "2026", text: "Tysiące zrealizowanych zleceń i ocena 5,0 w opiniach Google." },
+  { year: "2026", text: "Ocena 5,0 w opiniach Google i klienci z całej Polski." },
 ];
 
 function AboutPage() {

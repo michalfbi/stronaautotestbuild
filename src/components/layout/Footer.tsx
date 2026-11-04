@@ -39,7 +39,7 @@ export function Footer() {
               Niezależni eksperci w weryfikacji, zakupie i sprzedaży pojazdów. Chronimy Twoje pieniądze na każdym etapie transakcji.
             </p>
             <div className="mt-6 flex flex-wrap gap-3 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5"><Award className="h-3.5 w-3.5 text-primary" /> 1200+ zrealizowanych zleceń</span>
+              <span className="inline-flex items-center gap-1.5"><Award className="h-3.5 w-3.5 text-primary" /> Niezależni od komisów i handlarzy</span>
               <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-primary" /> 7 dni w tygodniu</span>
             </div>
           </div>
